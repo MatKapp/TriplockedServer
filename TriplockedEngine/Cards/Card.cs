@@ -14,7 +14,7 @@ namespace TriplockedEngine.Cards
         public bool[,] DmgKernel { get; set; }
         public int Special { get; set; }
         public int SpecialArg { get; set; }
-        public Card(string name, int len, Direction dir, int dmg, bool[,] ker, int spec = 0, int specArg = 0)
+        public Card(string name, int len, Direction dir, int dmg, bool[,] ker , int spec = 0, int specArg = 0)
         {
             Name = name;
             Lenght = len;

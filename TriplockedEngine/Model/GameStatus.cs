@@ -41,21 +41,22 @@ namespace TriplockedEngine.Model
             MaxY = maxY;
             Status = status;
             CardsList = new Dictionary<int, Card>()
-            {// id       mvm_len   mvm_dir      dmg        dmg_kernel  
-                {0, new Card(0,Direction.Up     ,0  ,new bool[1,1]{ {false} } )},
-                {1, new Card(1,Direction.Up     ,0  ,new bool[1,1]{ {false} } )},
-                {2, new Card(1,Direction.Down   ,0  ,new bool[1,1]{ {false} } )},
-                {3, new Card(1,Direction.Left   ,0  ,new bool[1,1]{ {false} } )},
-                {4, new Card(1,Direction.Right  ,0  ,new bool[1,1]{ {false} } )},
-                {5, new Card(0,Direction.Right  ,1  ,new bool[3,3]{ {true,true,true}, { true, true, true }, { true, true, true } } )},
-                {11, new Card(0,Direction.Right  ,1  ,new bool[3,3]{ { true, true, true}, { false, false, false }, { false, false, false } } )},
-                {12, new Card(0,Direction.Right  ,1  ,new bool[3,3]{ { false, false, true}, { false, false, true }, { false, false, true } } )},
-                {13, new Card(0,Direction.Right  ,1  ,new bool[3,3]{ { false, false, false }, { false, false, false }, { true, true, true } } )},
-                {14, new Card(0,Direction.Right  ,1  ,new bool[3,3]{ { true, false, false }, { true, false, false }, { true, false, false } } )},
-                {21, new Card(0,Direction.Right  ,2  ,new bool[3,3]{ { false, true, false }, { false, false, false }, { false, false, false } } )},
-                {22, new Card(0,Direction.Right  ,2  ,new bool[3,3]{ { false, false, false }, { false, false, true }, { false, false, false } } )},
-                {23, new Card(0,Direction.Right  ,2  ,new bool[3,3]{ { false, false, false }, { false, false, false }, { false, true, false } } )},
-                {24, new Card(0,Direction.Right  ,2  ,new bool[3,3]{ { false, false, false }, { true, false, false }, { false, false, false } } )},
+            {// id     name  mvm_len   mvm_dir      dmg        dmg_kernel  special   special_arg 
+                {-1, new Card("Move 0",0,Direction.Up     ,0  ,new bool[1,1]{ {false} } )},
+                {-2, new Card("Attack 1",0,Direction.Right  ,1  ,new bool[3,3]{ {true,true,true}, { true, false, true }, { true, true, true } } )},
+                {0,  new Card("Move 1",1,Direction.Up     ,0  ,new bool[1,1]{ {false} } )},
+                {1,  new Card("Move 1",1,Direction.Down   ,0  ,new bool[1,1]{ {false} } )},
+                {2,  new Card("Move 1",1,Direction.Left   ,0  ,new bool[1,1]{ {false} } )},
+                {3,  new Card("Move 1",1,Direction.Right  ,0  ,new bool[1,1]{ {false} } )},
+                {10, new Card("Attack 1",0,Direction.Right  ,1  ,new bool[3,3]{ { true, true, true}, { false, false, false }, { false, false, false } } )},
+                {11, new Card("Attack 1",0,Direction.Right  ,1  ,new bool[3,3]{ { false, false, false }, { false, false, false }, { true, true, true } } )},
+                {12, new Card("Attack 1",0,Direction.Right  ,1  ,new bool[3,3]{ { true, false, false}, { true, false, false }, { true, false, false } } )},
+                {13, new Card("Attack 1",0,Direction.Right  ,1  ,new bool[3,3]{ { false, false, true}, { false, false, true}, { false, false, true } } )},
+                {20, new Card("Attack 2",0,Direction.Right  ,2  ,new bool[3,3]{ { false, true, false }, { false, false, false }, { false, false, false } } )},
+                {21, new Card("Attack 2",0,Direction.Right  ,2  ,new bool[3,3]{ { false, false, false }, { false, false, false }, { false, true, false } } )},
+                {22, new Card("Attack 2",0,Direction.Right  ,2  ,new bool[3,3]{ { false, false, false }, { true, false, false }, { false, false, false } } )},
+                {23, new Card("Attack 2",0,Direction.Right  ,2  ,new bool[3,3]{ { false, false, false }, { false, false, true}, { false, false, false } } )},
+                {30, new Card("Attack 2",0,Direction.Right  ,2  ,new bool[3,3]{ { false, false, false }, { false, false, true}, { false, false, false } } )},
 
             };
             PlayersResponseCounter = 0;
@@ -269,6 +270,7 @@ namespace TriplockedEngine.Model
                 var card = CardsList[player.ActionList[cardNumber]];
                 if (card.Dmg != 0)
                 {
+                    player.Animation = AnimationStatus.Attack;
                     int sizePerSide = card.DmgKernel.GetLength(0) / 2;
                     for (int y = 0; y < card.DmgKernel.GetLength(0); y++)
                     {
@@ -288,7 +290,6 @@ namespace TriplockedEngine.Model
                     if (affectedPositions.Contains(position.Value))
                     {
                         CurrentPlayers.First(d => d.PlayerId == position.Key).HP-=card.Dmg;
-                        //dodać taking dmg by player
                     }
                 }
             }
