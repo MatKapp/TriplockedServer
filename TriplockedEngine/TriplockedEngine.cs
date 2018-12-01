@@ -28,12 +28,12 @@ namespace TriplockedEngine
 
         public string AddMonitor(string webSockedId, int roomId = 0)
         {
-            throw new NotImplementedException();
+            return gameStatus.AddMonitor(webSockedId);
         }
 
         public string RemoveMonitro(string webSockedId)
         {
-            throw new NotImplementedException();
+            return gameStatus.RemoveMonitor(webSockedId);
         }
 
         public int GetRoomSize(int roomId = 0)
