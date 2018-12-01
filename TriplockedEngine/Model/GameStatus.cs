@@ -172,6 +172,7 @@ namespace TriplockedEngine.Model
                 if (card.Lenght != 0)
                 {
                     playersMovements[player.PlayerId] = MovementAction(card);
+                    player.Animation = AnimationStatus.Move;
                 }
             }
             bool finished = false;
@@ -212,10 +213,15 @@ namespace TriplockedEngine.Model
                     }
                 }
             }
+            //zobaczyc czy to dziala
             foreach (var player in CurrentPlayers)
             {
                 player.X = playersPositions[player.PlayerId].Item1;
                 player.Y = playersPositions[player.PlayerId].Item2;
+                if(player.Animation == AnimationStatus.Move && ! playersMovements.ContainsKey(player.PlayerId))
+                {
+                    player.Animation = AnimationStatus.Colide;
+                }
             }
         }
     }
