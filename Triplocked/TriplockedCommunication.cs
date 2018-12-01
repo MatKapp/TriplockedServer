@@ -27,16 +27,10 @@ namespace Triplocked
             var message = new Message()
             {
                 MessageType = MessageType.Text,
-                Data = $"{socketId} is now connected"
+                Data = $"{socketId} połączyłeś się Piotrze"
             };
 
-            await SendMessageToAllAsync(message);
-        }
-
-        // this method can be called from a client, doesn't return anything.
-        public async Task SendMessage(WebSocket socket, string message)
-        {
-           await InvokeClientMethodToAllAsync("receiveMessage", WebSocketConnectionManager.GetId(socket), message);
+            await SendMessageAsync(socketId, message);
         }
 
         // this method can be called from a client, sequence of player actions.
@@ -44,7 +38,13 @@ namespace Triplocked
         {
             var socketId = WebSocketConnectionManager.GetId(socket);
             var response = TriplockedEngine.Action(socketId, message);
-            await InvokeClientMethodToAllAsync("receiveMessage", WebSocketConnectionManager.GetId(socket), response);
+            Message responseMessage = new Message()
+            {
+                MessageType = MessageType.Text,
+                Data = response
+            };
+
+            await SendMessageToAllAsync(responseMessage);
         }
 
         public override async Task OnDisconnected(WebSocket socket)
