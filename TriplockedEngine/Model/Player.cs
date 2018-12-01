@@ -7,6 +7,7 @@ namespace TriplockedEngine.Model
 {
     class Player
     {
+        public int PlayerNumber { get; set; }
         public string PlayerId { get; set; }
         public int HP { get; set; }
         public int Attack { get; set; }
@@ -17,8 +18,9 @@ namespace TriplockedEngine.Model
         public List<int> CurrentHand { get; set; }
         public bool ActionRecorded { get; set; }
 
-        public Player(string id, int x, int y)
+        public Player(int number, string id, int x, int y)
         {
+            PlayerNumber = number;
             PlayerId = id;
             HP = 3;
             Attack = 1;
