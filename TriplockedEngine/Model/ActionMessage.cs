@@ -6,6 +6,6 @@ namespace TriplockedEngine.Model
 {
     class ActionMessage
     {
-        public int ActionId { get; set; }
+        public string ActionId { get; set; }
     }
 }
