@@ -9,7 +9,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebSocketManager", "WebSock
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebSocketManager.Common", "WebSocketManager.Common\WebSocketManager.Common.csproj", "{E7AB5A71-D055-4B01-B019-C9D92227E7D2}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TriplockedEngine", "..\pgg2018\pgg2018\TriplockedEngine.csproj", "{90C4AD18-F1E5-4A3C-A1DD-637E567BA7E6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TriplockedEngine", "TriplockedEngine\TriplockedEngine.csproj", "{48DD8E9F-EBBD-447A-BAA8-FA01BAC0AFF8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -29,10 +29,10 @@ Global
 		{E7AB5A71-D055-4B01-B019-C9D92227E7D2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E7AB5A71-D055-4B01-B019-C9D92227E7D2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E7AB5A71-D055-4B01-B019-C9D92227E7D2}.Release|Any CPU.Build.0 = Release|Any CPU
-		{90C4AD18-F1E5-4A3C-A1DD-637E567BA7E6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{90C4AD18-F1E5-4A3C-A1DD-637E567BA7E6}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{90C4AD18-F1E5-4A3C-A1DD-637E567BA7E6}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{90C4AD18-F1E5-4A3C-A1DD-637E567BA7E6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{48DD8E9F-EBBD-447A-BAA8-FA01BAC0AFF8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{48DD8E9F-EBBD-447A-BAA8-FA01BAC0AFF8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{48DD8E9F-EBBD-447A-BAA8-FA01BAC0AFF8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{48DD8E9F-EBBD-447A-BAA8-FA01BAC0AFF8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
