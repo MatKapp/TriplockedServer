@@ -316,8 +316,18 @@ namespace TriplockedEngine.Model
                         {
                             currentPlayer.Animation = AnimationStatus.Death;
                         }
-
-                        //dodać taking dmg by player
+                        switch (currentPlayer.Animation)
+                        {
+                            case AnimationStatus.Idle:
+                                currentPlayer.Animation = AnimationStatus.IdleHurt;
+                                break;
+                            case AnimationStatus.Move:
+                                currentPlayer.Animation = AnimationStatus.MoveHurt;
+                                break;
+                            case AnimationStatus.Attack:
+                                currentPlayer.Animation = AnimationStatus.AttackHurt;
+                                break;
+                        }
                     }
                 }
             }
