@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.28010.2050
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Triplocked", "Triplocked\Triplocked.csproj", "{7555B5C3-949D-4ED1-BB69-1D6BBF965651}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TriplockedCommunication", "Triplocked\TriplockedCommunication.csproj", "{7555B5C3-949D-4ED1-BB69-1D6BBF965651}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebSocketManager", "WebSocketManager\WebSocketManager.csproj", "{62577795-A90F-4504-9571-151098A3FD83}"
 EndProject

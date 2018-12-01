@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using Newtonsoft.Json;
+using Triplocked.TriplockedEngine.Model;
 
 namespace TriplockedEngine
 {

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace TriplockedEngine.Model
+namespace Triplocked.TriplockedEngine.Model
 {
     class ActionMessage
     {
