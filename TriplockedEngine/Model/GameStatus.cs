@@ -14,7 +14,7 @@ namespace TriplockedEngine.Model
         public int MaxX { get; set; }
         public int MaxY { get; set; }
         public int Status { get; set; }
-        public int ActionCount { get; set; }
+        public int PlayersResponseCounter { get; set; }
 
         public GameStatus(int id, int maxPlayers, int maxX, int maxY, int status)
         {
@@ -25,30 +25,38 @@ namespace TriplockedEngine.Model
             MaxX = maxX;
             MaxY = maxY;
             Status = status;
-            ActionCount = 0;
+            PlayersResponseCounter = 0;
         }
-        public int AddPlayer(string id)
+        public string AddPlayer(string id)
         {
+            string result;
+
             if (CurrentPlayers.Count < MaxPlayers)
             {
                 Player newPlayer = new Player(id, CurrentPlayers.Count * 3, 1 + CurrentPlayers.Count);
-                return 0;
-            } else
-            {
-                return 1;
-            }            
-        }
-        public int RemovePlayer(string id)
-        {
-            if (CurrentPlayers.RemoveAll(p => p.PlayerId.Equals(id)) == 1)
-            {
-                if (CurrentPlayers.Count < 2)
-                {
-                    Status = 0;
-                }                
-                return 0;
+                CurrentPlayers.Add(newPlayer);
+                result = "Added";
             }
-            return 1;
+            else
+            {
+                result = "Too many players, sorry";
+            }
+            return result;
+        }
+        public string RemovePlayer(string id)
+        {
+            string result;
+
+            if (CurrentPlayers.RemoveAll(p => p.PlayerId.Equals(id) == 1)
+            {
+                result = "Player removed";
+            }
+            else
+            {
+                result = "Player to remove not found";
+            }
+
+            return result;
         }
         public int AddMonitor(string id)
         {
@@ -64,26 +72,28 @@ namespace TriplockedEngine.Model
             }            
             return 1;
         }
-        public int AddAction(string PlayerId, List<ActionMessage> Actions)
+        public string AddAction(string playerId, List<ActionMessage> actions)
         {
-            Player player = CurrentPlayers.Where(p => p.PlayerId.Equals(PlayerId)).FirstOrDefault();
+            Player player = CurrentPlayers.FirstOrDefault(p => p.PlayerId.Equals(playerId));
+
             if (player != null)
             {
-                player.ActionList = Actions;
-                ActionCount++;
-                if (ActionCount == MaxPlayers)
+                player.ActionList = actions;
+                PlayersResponseCounter++;
+
+                if (PlayersResponseCounter == MaxPlayers)
                 {
                     MakeMove();
                 }
-                return 0;
+                return "Player action added";
             } else
             {
-                return 1;
+                return "Player action add failed, player not found";
             }
         }
         private void MakeMove()
         {
-            ActionCount = 0;
+            PlayersResponseCounter = 0;
 
         }
     }
