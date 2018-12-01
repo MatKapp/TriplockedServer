@@ -41,6 +41,26 @@ namespace TriplockedEngine
             }
         }
 
+        public string AddMonitor(string webSockedId, int roomId = 0)
+        {
+            throw new NotImplementedException();
+        }
+
+        public string RemoveMonitro(string webSockedId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public int GetRoomSize(int roomId = 0)
+        {
+            return gameStatus.MaxPlayers;
+        }
+
+        public int GetNumberOfPlayers(int roomId = 0)
+        {
+            return gameStatus.CurrentPlayers.Count;
+        }
+
         public TriplockedEngine()
         {
             gameStatus = new GameStatus(1,2,4,7,1);
