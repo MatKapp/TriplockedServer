@@ -47,7 +47,7 @@ namespace TriplockedEngine.Model
         {
             string result;
 
-            if (CurrentPlayers.RemoveAll(p => p.PlayerId.Equals(id) == 1)
+            if (CurrentPlayers.RemoveAll(p => p.PlayerId.Equals(id)) == 1)
             {
                 result = "Player removed";
             }
@@ -58,19 +58,19 @@ namespace TriplockedEngine.Model
 
             return result;
         }
-        public int AddMonitor(string id)
+        public string AddMonitor(string id)
         {
             Monitor newMonitor = new Monitor(id);
             CurrentMonitors.Add(newMonitor);
-            return 0;
+            return "Monitor added";
         }
-        public int RemoveMonitor(string id)
+        public string RemoveMonitor(string id)
         {
             if (CurrentMonitors.RemoveAll(m => m.MonitorId.Equals(id)) == 1)
             {
-                return 0;
+                return "Monitor removed";
             }            
-            return 1;
+            return "Monitor to remove not found";
         }
         public string AddAction(string playerId, List<ActionMessage> actions)
         {
