@@ -84,7 +84,7 @@ namespace TriplockedEngine.Model
             }            
             return "Monitor to remove not found";
         }
-        public string AddAction(string playerId, List<ActionMessage> actions)
+        public string AddAction(string playerId, List<Int32> actions)
         {
             Player player = CurrentPlayers.FirstOrDefault(p => p.PlayerId.Equals(playerId));
             string result;
