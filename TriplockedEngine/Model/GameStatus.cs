@@ -43,11 +43,15 @@ namespace TriplockedEngine.Model
             CardsList = new Dictionary<int, Card>()
             {// id       mvm_len   mvm_dir      dmg        dmg_kernel  
                 {0, new Card(0,Direction.Up     ,0  ,new bool[1,1]{ {false} } )},
-                {1, new Card(2,Direction.Up     ,0  ,new bool[1,1]{ {false} } )},
-                {2, new Card(2,Direction.Down   ,0  ,new bool[1,1]{ {false} } )},
-                {3, new Card(2,Direction.Left   ,0  ,new bool[1,1]{ {false} } )},
-                {4, new Card(2,Direction.Right  ,0  ,new bool[1,1]{ {false} } )},
+                {1, new Card(1,Direction.Up     ,0  ,new bool[1,1]{ {false} } )},
+                {2, new Card(1,Direction.Down   ,0  ,new bool[1,1]{ {false} } )},
+                {3, new Card(1,Direction.Left   ,0  ,new bool[1,1]{ {false} } )},
+                {4, new Card(1,Direction.Right  ,0  ,new bool[1,1]{ {false} } )},
                 {5, new Card(0,Direction.Right  ,1  ,new bool[3,3]{ {true,true,true}, { true, false, true }, { true, true, true } } )},
+                {11, new Card(0,Direction.Right  ,1  ,new bool[3,3]{ { true, true, true}, { false, false, false }, { false, false, false } } )},
+                {12, new Card(0,Direction.Right  ,1  ,new bool[3,3]{ { false, false, true}, { false, false, true }, { false, false, true } } )},
+                {13, new Card(0,Direction.Right  ,1  ,new bool[3,3]{ { false, false, false }, { false, false, false }, { true, true, true } } )},
+                {14, new Card(0,Direction.Right  ,1  ,new bool[3,3]{ { true, false, false }, { true, false, false }, { true, false, false } } )},
             };
             PlayersResponseCounter = 0;
         }
@@ -103,14 +107,21 @@ namespace TriplockedEngine.Model
 
             if (player != null)
             {
-                player.ActionList = actions;
-                PlayersResponseCounter++;
-                result = $"Player action added, {CurrentPlayers.Count}/{MaxPlayers}";
-
-                if (PlayersResponseCounter == MaxPlayers)
+                if (!player.ActionRecorded)
                 {
-                    MakeMove();
-                    result = printGameState();
+                    player.ActionList = actions;
+                    PlayersResponseCounter++;
+                    result = $"Player action added, {CurrentPlayers.Count}/{MaxPlayers}";
+
+                    if (PlayersResponseCounter == MaxPlayers)
+                    {
+                        MakeMove();
+                        result = printGameState();
+                    }
+                }
+                else
+                {
+                    result = "Player action add failed, action already added";
                 }
             }
             else
@@ -122,7 +133,13 @@ namespace TriplockedEngine.Model
         }
         private void MakeMove()
         {
-            for(int i = 0; i < 3; i++)
+            foreach (var player in CurrentPlayers)
+            {
+                player.DrawCards();
+                player.ActionRecorded = false;
+            }
+
+            for (int i = 0; i < 3; i++)
             {
                 ResolveMoves(i);
                 ResolveAttack(i);
@@ -130,8 +147,7 @@ namespace TriplockedEngine.Model
                 //players attack
             }
 
-            PlayersResponseCounter = 0;
-
+            PlayersResponseCounter = 0;            
         }
 
         private string printGameState()

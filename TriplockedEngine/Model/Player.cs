@@ -14,6 +14,8 @@ namespace TriplockedEngine.Model
         public int Y { get; set; }
         public AnimationStatus Animation { get; set; }
         public List<int> ActionList { get; set; }
+        public List<int> CurrentHand { get; set; }
+        public bool ActionRecorded { get; set; }
 
         public Player(string id, int x, int y)
         {
@@ -22,6 +24,11 @@ namespace TriplockedEngine.Model
             Attack = 1;
             X = x;
             Y = y;
+            DrawCards();
+        }
+        public void DrawCards()
+        {
+            CurrentHand = new List<int> { 1, 2, 3, 4, 5 };
         }
     }
 }
