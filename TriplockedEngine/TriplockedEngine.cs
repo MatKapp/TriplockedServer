@@ -31,7 +31,7 @@ namespace TriplockedEngine
             return gameStatus.AddMonitor(webSockedId);
         }
 
-        public string RemoveMonitro(string webSockedId)
+        public string RemoveMonitor(string webSockedId)
         {
             return gameStatus.RemoveMonitor(webSockedId);
         }
