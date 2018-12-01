@@ -5,6 +5,10 @@ VisualStudioVersion = 15.0.28010.2050
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Triplocked", "Triplocked\Triplocked.csproj", "{7555B5C3-949D-4ED1-BB69-1D6BBF965651}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebSocketManager", "WebSocketManager\WebSocketManager.csproj", "{62577795-A90F-4504-9571-151098A3FD83}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebSocketManager.Common", "WebSocketManager.Common\WebSocketManager.Common.csproj", "{E7AB5A71-D055-4B01-B019-C9D92227E7D2}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +19,14 @@ Global
 		{7555B5C3-949D-4ED1-BB69-1D6BBF965651}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7555B5C3-949D-4ED1-BB69-1D6BBF965651}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7555B5C3-949D-4ED1-BB69-1D6BBF965651}.Release|Any CPU.Build.0 = Release|Any CPU
+		{62577795-A90F-4504-9571-151098A3FD83}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{62577795-A90F-4504-9571-151098A3FD83}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{62577795-A90F-4504-9571-151098A3FD83}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{62577795-A90F-4504-9571-151098A3FD83}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E7AB5A71-D055-4B01-B019-C9D92227E7D2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E7AB5A71-D055-4B01-B019-C9D92227E7D2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E7AB5A71-D055-4B01-B019-C9D92227E7D2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E7AB5A71-D055-4B01-B019-C9D92227E7D2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
