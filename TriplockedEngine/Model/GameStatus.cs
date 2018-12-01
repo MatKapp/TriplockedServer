@@ -120,8 +120,7 @@ namespace TriplockedEngine.Model
 
                     if (PlayersResponseCounter == MaxPlayers)
                     {
-                        MakeMove();
-                        result = printGameState();
+                        result = MakeMove();
                     }
                 }
                 else
@@ -136,8 +135,11 @@ namespace TriplockedEngine.Model
 
             return result;
         }
-        private void MakeMove()
+        private string MakeMove()
         {
+            StringBuilder resultBuilder = new StringBuilder();
+            resultBuilder.Append("{\"data\": [");
+
             foreach (var player in CurrentPlayers)
             {
                 player.DrawCards();
@@ -148,11 +150,20 @@ namespace TriplockedEngine.Model
             {
                 ResolveMoves(i);
                 ResolveAttack(i);
+                resultBuilder.Append(printGameState());
+
+                if (i != 2)
+                {
+                    resultBuilder.Append(',');
+                }
                 //players special
                 //players attack
             }
 
-            PlayersResponseCounter = 0;            
+            resultBuilder.Append("]}");
+            PlayersResponseCounter = 0;
+
+            return resultBuilder.ToString();
         }
 
         private string printGameState()
