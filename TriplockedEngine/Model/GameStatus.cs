@@ -181,7 +181,10 @@ namespace TriplockedEngine.Model
             }
             foreach (var player in CurrentPlayers)
             {
-                Grid[player.X, player.Y] = player.PlayerNumber;
+                if (player.Animation != AnimationStatus.Death)
+                {
+                    Grid[player.X, player.Y] = player.PlayerNumber;
+                }
             }
         }
         private string printGameState()
@@ -305,7 +308,13 @@ namespace TriplockedEngine.Model
                 {
                     if (affectedPositions.Contains(position.Value))
                     {
-                        CurrentPlayers.First(d => d.PlayerId == position.Key).HP-=card.Dmg;
+                        Player currentPlayer = CurrentPlayers.First(d => d.PlayerId == position.Key);
+                        currentPlayer.HP -= card.Dmg;
+                        if (currentPlayer.HP <= 0)
+                        {
+                            currentPlayer.Animation = AnimationStatus.Death;
+                        }
+
                         //dodać taking dmg by player
                     }
                 }

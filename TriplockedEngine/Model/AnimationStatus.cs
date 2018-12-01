@@ -1,5 +1,5 @@
 ﻿
 namespace TriplockedEngine.Model
 {
-    public enum AnimationStatus { Idle, Move, Attack, Defend, Special, Colide}
+    public enum AnimationStatus { Idle, Move, Attack, Defend, Special, Colide, Death}
 }
