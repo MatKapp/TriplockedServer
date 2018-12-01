@@ -52,6 +52,11 @@ namespace TriplockedEngine.Model
                 {12, new Card(0,Direction.Right  ,1  ,new bool[3,3]{ { false, false, true}, { false, false, true }, { false, false, true } } )},
                 {13, new Card(0,Direction.Right  ,1  ,new bool[3,3]{ { false, false, false }, { false, false, false }, { true, true, true } } )},
                 {14, new Card(0,Direction.Right  ,1  ,new bool[3,3]{ { true, false, false }, { true, false, false }, { true, false, false } } )},
+                {21, new Card(0,Direction.Right  ,2  ,new bool[3,3]{ { false, true, false }, { false, false, false }, { false, false, false } } )},
+                {22, new Card(0,Direction.Right  ,2  ,new bool[3,3]{ { false, false, false }, { false, false, true }, { false, false, false } } )},
+                {23, new Card(0,Direction.Right  ,2  ,new bool[3,3]{ { false, false, false }, { false, false, false }, { false, true, false } } )},
+                {24, new Card(0,Direction.Right  ,2  ,new bool[3,3]{ { false, false, false }, { true, false, false }, { false, false, false } } )},
+
             };
             PlayersResponseCounter = 0;
         }
