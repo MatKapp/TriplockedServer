@@ -24,7 +24,7 @@ namespace TriplockedEngine.Model
         public List<Player> CurrentPlayers { get; set; }
         public List<Monitor> CurrentMonitors { get; set; }
     
-        public Dictionary<string,Card> CardsList { get; set; }
+        public Dictionary<int, Card> CardsList { get; set; }
         public int MaxPlayers { get; set; }
         public int MaxX { get; set; }
         public int MaxY { get; set; }
@@ -40,13 +40,13 @@ namespace TriplockedEngine.Model
             MaxX = maxX;
             MaxY = maxY;
             Status = status;
-            CardsList = new Dictionary<string, Card>()
+            CardsList = new Dictionary<int, Card>()
             {
-                {"idle", new Card(0,Direction.Up) },
-                {"move_up", new Card(2,Direction.Up) },
-                {"move_down", new Card(2,Direction.Down) },
-                {"move_left", new Card(2,Direction.Left) },
-                {"move_right", new Card(2,Direction.Right) },
+                {0, new Card(0,Direction.Up) },
+                {1, new Card(2,Direction.Up) },
+                {2, new Card(2,Direction.Down) },
+                {3, new Card(2,Direction.Left) },
+                {4, new Card(2,Direction.Right) },
             };
             PlayersResponseCounter = 0;
         }
@@ -95,7 +95,7 @@ namespace TriplockedEngine.Model
             }            
             return "Monitor to remove not found";
         }
-        public string AddAction(string playerId, List<Int32> actions)
+        public string AddAction(string playerId, List<int> actions)
         {
             Player player = CurrentPlayers.FirstOrDefault(p => p.PlayerId.Equals(playerId));
             string result;
@@ -168,7 +168,7 @@ namespace TriplockedEngine.Model
             Dictionary<string, Tuple<int, int>> playersMovements = new Dictionary<string, Tuple<int, int>>();
             foreach (var player in CurrentPlayers)
             {
-                var card = CardsList[player.ActionList[cardNumber].ActionId];
+                var card = CardsList[player.ActionList[cardNumber]];
                 if (card.Lenght != 0)
                 {
                     playersMovements[player.PlayerId] = MovementAction(card);

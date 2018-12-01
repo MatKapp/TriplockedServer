@@ -22,7 +22,7 @@ namespace TriplockedEngine
 
         public string Action(string webSocketId, string actionMessage)
         {
-            var action = JsonConvert.DeserializeObject<List<Int32>>(actionMessage);
+            var action = JsonConvert.DeserializeObject<List<int>>(actionMessage);
             return gameStatus.AddAction(webSocketId, action);
         }
 

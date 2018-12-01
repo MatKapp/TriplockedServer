@@ -13,7 +13,7 @@ namespace TriplockedEngine.Model
         public int X { get; set; }
         public int Y { get; set; }
         public AnimationStatus Animation { get; set; }
-        public List<Int32> ActionList { get; set; }
+        public List<int> ActionList { get; set; }
 
         public Player(string id, int x, int y)
         {
