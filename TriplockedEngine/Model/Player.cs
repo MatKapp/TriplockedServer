@@ -30,7 +30,7 @@ namespace TriplockedEngine.Model
         }
         public void DrawCards()
         {
-            CurrentHand = new List<int> { 1, 2, 3, 4, 5 };
+            CurrentHand = new List<int> { 0, 10, 20, 30, 40 };
         }
     }
 }

@@ -29,6 +29,7 @@ namespace TriplockedEngine.Model
         public int MaxX { get; set; }
         public int MaxY { get; set; }
         public int Status { get; set; }
+        public int MaxHP { get; set; }
         public int PlayersResponseCounter { get; set; }
         public int[,] Grid; 
 
@@ -41,24 +42,37 @@ namespace TriplockedEngine.Model
             MaxX = maxX;
             MaxY = maxY;
             Status = status;
+            MaxHP = 3;
             Grid = new int[MaxX, MaxY];
             CardsList = new Dictionary<int, Card>()
             {// id     name  mvm_len   mvm_dir      dmg        dmg_kernel  special   special_arg 
                 {-1, new Card("Move 0",0,Direction.Up     ,0  ,new bool[1,1]{ {false} } )},
                 {-2, new Card("Attack 1",0,Direction.Right  ,1  ,new bool[3,3]{ {true,true,true}, { true, false, true }, { true, true, true } } )},
+
                 {0,  new Card("Move 1",1,Direction.Up     ,0  ,new bool[1,1]{ {false} } )},
                 {1,  new Card("Move 1",1,Direction.Down   ,0  ,new bool[1,1]{ {false} } )},
                 {2,  new Card("Move 1",1,Direction.Left   ,0  ,new bool[1,1]{ {false} } )},
                 {3,  new Card("Move 1",1,Direction.Right  ,0  ,new bool[1,1]{ {false} } )},
+
                 {10, new Card("Attack 1",0,Direction.Right  ,1  ,new bool[3,3]{ { true, true, true}, { false, false, false }, { false, false, false } } )},
                 {11, new Card("Attack 1",0,Direction.Right  ,1  ,new bool[3,3]{ { false, false, false }, { false, false, false }, { true, true, true } } )},
                 {12, new Card("Attack 1",0,Direction.Right  ,1  ,new bool[3,3]{ { true, false, false}, { true, false, false }, { true, false, false } } )},
                 {13, new Card("Attack 1",0,Direction.Right  ,1  ,new bool[3,3]{ { false, false, true}, { false, false, true}, { false, false, true } } )},
+
                 {20, new Card("Attack 2",0,Direction.Right  ,2  ,new bool[3,3]{ { false, true, false }, { false, false, false }, { false, false, false } } )},
                 {21, new Card("Attack 2",0,Direction.Right  ,2  ,new bool[3,3]{ { false, false, false }, { false, false, false }, { false, true, false } } )},
                 {22, new Card("Attack 2",0,Direction.Right  ,2  ,new bool[3,3]{ { false, false, false }, { true, false, false }, { false, false, false } } )},
                 {23, new Card("Attack 2",0,Direction.Right  ,2  ,new bool[3,3]{ { false, false, false }, { false, false, true}, { false, false, false } } )},
-                {30, new Card("Attack 2",0,Direction.Right  ,2  ,new bool[3,3]{ { false, false, false }, { false, false, true}, { false, false, false } } )},
+                
+                {30, new Card("Move 1, Attack 1",1,Direction.Up  ,1  ,new bool[3,3]{ { true, true, true}, { false, false, false }, { false, false, false } } )},
+                {31, new Card("Move 1, Attack 1",1,Direction.Down  ,1  ,new bool[3,3]{ { false, false, false }, { false, false, false }, { true, true, true } } )},
+                {32, new Card("Move 1, Attack 1",1,Direction.Left  ,1  ,new bool[3,3]{ { true, false, false}, { true, false, false }, { true, false, false } } )},
+                {33, new Card("Move 1, Attack 1",1,Direction.Right  ,1  ,new bool[3,3]{ { false, false, true}, { false, false, true}, { false, false, true } } )},
+
+                {40,  new Card("Heal 1",0,Direction.Up     ,0  ,new bool[1,1]{ {false} } ,1,1)},
+                {41,  new Card("Heal 1",0,Direction.Up     ,0  ,new bool[1,1]{ {false} } ,1,1)},
+                {42,  new Card("Heal 1",0,Direction.Up     ,0  ,new bool[1,1]{ {false} } ,1,1)},
+                {43,  new Card("Heal 1",0,Direction.Up     ,0  ,new bool[1,1]{ {false} } ,1,1)},
 
             };
             PlayersResponseCounter = 0;
@@ -146,7 +160,8 @@ namespace TriplockedEngine.Model
             foreach (var player in CurrentPlayers)
             {
                 player.DrawCards();
-                player.ActionRecorded = false;                
+                player.ActionRecorded = false;
+                player.Animation = AnimationStatus.Idle;
             }
 
             for (int i = 0; i < 3; i++)
@@ -154,6 +169,7 @@ namespace TriplockedEngine.Model
                 ResolveMoves(i);
                 GenerateGrid();
                 ResolveAttack(i);
+                ResolveSpecial(i);
                 
                 resultBuilder.Append(printGameState());
 
@@ -308,6 +324,13 @@ namespace TriplockedEngine.Model
                 }
                 foreach (var position in playersPositions)
                 {
+                    foreach (var pos in affectedPositions)
+                    {
+                        if(Grid[pos.Item1,pos.Item2] == -1)
+                        {
+                            Grid[pos.Item1, pos.Item2] = -2;
+                        }
+                    }
                     if (affectedPositions.Contains(position.Value))
                     {
                         Player currentPlayer = CurrentPlayers.First(d => d.PlayerId == position.Key);
@@ -327,7 +350,48 @@ namespace TriplockedEngine.Model
                             case AnimationStatus.Attack:
                                 currentPlayer.Animation = AnimationStatus.AttackHurt;
                                 break;
+                            case AnimationStatus.Colide:
+                                currentPlayer.Animation = AnimationStatus.ColideHurt;
+                                break;
                         }
+                    }
+                }
+            }
+        }
+        private void ResolveSpecial(int cardNumber)
+        {
+            foreach (var player in CurrentPlayers)
+            {
+                var card = CardsList[player.ActionList[cardNumber]];
+                if (card.Special != 0)
+                {
+                    switch (player.Animation)
+                    {
+                        case AnimationStatus.Idle:
+                            player.Animation = AnimationStatus.Special;
+                            break;
+                        case AnimationStatus.Move:
+                            player.Animation = AnimationStatus.Special;
+                            break;
+                        case AnimationStatus.IdleHurt:
+                            player.Animation = AnimationStatus.SpecialHurt;
+                            break;
+                        case AnimationStatus.MoveHurt:
+                            player.Animation = AnimationStatus.SpecialHurt;
+                            break;
+                        case AnimationStatus.Colide:
+                            player.Animation = AnimationStatus.Special;
+                            break;
+                        case AnimationStatus.ColideHurt:
+                            player.Animation = AnimationStatus.SpecialHurt;
+                            break;
+
+                    }
+                    switch (card.Special)
+                    {
+                        case 1: //heal
+                            player.HP = Math.Min(player.HP + card.SpecialArg, MaxHP);
+                            break;
                     }
                 }
             }
