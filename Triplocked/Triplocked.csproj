@@ -11,4 +11,7 @@
   <ItemGroup>
     <Folder Include="wwwroot\" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\WebSocketManager\WebSocketManager.csproj" />
+  </ItemGroup>
 </Project>
