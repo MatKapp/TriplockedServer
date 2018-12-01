@@ -5,7 +5,7 @@ using Newtonsoft.Json;
 
 namespace TriplockedEngine
 {
-    public class Triplocked : IGameEngine
+    public class TriplockedEngine : IGameEngine
     {
         private GameStatus gameStatus;
 
@@ -41,7 +41,7 @@ namespace TriplockedEngine
             }
         }
 
-        public Triplocked()
+        public TriplockedEngine()
         {
             gameStatus = new GameStatus(1,2,4,7,1);
         }
