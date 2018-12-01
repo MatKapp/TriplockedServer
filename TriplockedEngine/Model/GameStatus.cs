@@ -47,7 +47,7 @@ namespace TriplockedEngine.Model
                 {2, new Card(1,Direction.Down   ,0  ,new bool[1,1]{ {false} } )},
                 {3, new Card(1,Direction.Left   ,0  ,new bool[1,1]{ {false} } )},
                 {4, new Card(1,Direction.Right  ,0  ,new bool[1,1]{ {false} } )},
-                {5, new Card(0,Direction.Right  ,1  ,new bool[3,3]{ {true,true,true}, { true, false, true }, { true, true, true } } )},
+                {5, new Card(0,Direction.Right  ,1  ,new bool[3,3]{ {true,true,true}, { true, true, true }, { true, true, true } } )},
                 {11, new Card(0,Direction.Right  ,1  ,new bool[3,3]{ { true, true, true}, { false, false, false }, { false, false, false } } )},
                 {12, new Card(0,Direction.Right  ,1  ,new bool[3,3]{ { false, false, true}, { false, false, true }, { false, false, true } } )},
                 {13, new Card(0,Direction.Right  ,1  ,new bool[3,3]{ { false, false, false }, { false, false, false }, { true, true, true } } )},
