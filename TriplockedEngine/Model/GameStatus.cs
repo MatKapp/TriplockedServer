@@ -40,7 +40,6 @@ namespace TriplockedEngine.Model
             MaxX = maxX;
             MaxY = maxY;
             Status = status;
-            ActionCount = 0;
             CardsList = new Dictionary<string, Card>()
             {
                 {"idle", new Card(0,Direction.Up) },
@@ -128,7 +127,7 @@ namespace TriplockedEngine.Model
                 //players special
                 //players attack
             }
-            ActionCount = 0;
+
             PlayersResponseCounter = 0;
 
         }
@@ -186,9 +185,15 @@ namespace TriplockedEngine.Model
                 foreach (var movement in playersMovements)
                 {
                     var playerId = movement.Key;
-                    playersPositions[playerId] = new Tuple<int, int>(
-                        playersPositions[playerId].Item1 + playersMovements[playerId].Item1,
-                        playersPositions[playerId].Item2 + playersMovements[playerId].Item2);
+                    var movX = playersPositions[playerId].Item1 + playersMovements[playerId].Item1;
+                    if (movX >= MaxX) movX = MaxX - 1;
+                    if (movX < 0) movX = 0;
+
+                    var movY = playersPositions[playerId].Item2 + playersMovements[playerId].Item2;
+                    if (movY >= MaxY) movY = MaxY - 1;
+                    if (movY < 0) movY = 0;
+
+                    playersPositions[playerId] = new Tuple<int, int>(movX,movY);
                 }
                 //var duplicateValues = playersPositions.GroupBy(x => x.Value).Where(x => x.Count() > 1);
                 //if(duplicateValues.Count() != 0)
