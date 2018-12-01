@@ -21,6 +21,7 @@ namespace TriplockedEngine.Model
 
         public int GameId { get; set; }
         public List<Player> CurrentPlayers { get; set; }
+        public List<Monitor> CurrentMonitors { get; set; }
         public int MaxPlayers { get; set; }
         public int MaxX { get; set; }
         public int MaxY { get; set; }
@@ -31,6 +32,7 @@ namespace TriplockedEngine.Model
         {
             GameId = id;
             CurrentPlayers = new List<Player>();
+            CurrentMonitors = new List<Monitor>();
             MaxPlayers = maxPlayers;
             MaxX = maxX;
             MaxY = maxY;
@@ -41,7 +43,7 @@ namespace TriplockedEngine.Model
         {
             string result;
 
-            if (CurrentPlayers.Count >= MaxPlayers)
+            if (CurrentPlayers.Count < MaxPlayers)
             {
                 Player newPlayer = new Player(id, CurrentPlayers.Count * 3, 1 + CurrentPlayers.Count);
                 CurrentPlayers.Add(newPlayer);
@@ -55,12 +57,10 @@ namespace TriplockedEngine.Model
         }
         public string RemovePlayer(string id)
         {
-            Player playerToRemove = CurrentPlayers.FirstOrDefault(player => player.PlayerId.Equals(id));
             string result;
 
-            if (playerToRemove != null)
+            if (CurrentPlayers.RemoveAll(p => p.PlayerId.Equals(id)) == 1)
             {
-                CurrentPlayers.Remove(playerToRemove);
                 result = "Player removed";
             }
             else
@@ -69,6 +69,20 @@ namespace TriplockedEngine.Model
             }
 
             return result;
+        }
+        public string AddMonitor(string id)
+        {
+            Monitor newMonitor = new Monitor(id);
+            CurrentMonitors.Add(newMonitor);
+            return "Monitor added";
+        }
+        public string RemoveMonitor(string id)
+        {
+            if (CurrentMonitors.RemoveAll(m => m.MonitorId.Equals(id)) == 1)
+            {
+                return "Monitor removed";
+            }            
+            return "Monitor to remove not found";
         }
         public string AddAction(string playerId, List<ActionMessage> actions)
         {

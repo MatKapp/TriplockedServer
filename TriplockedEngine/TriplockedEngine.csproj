@@ -12,4 +12,8 @@
     <ProjectReference Include="..\WebSocketManager.Common\WebSocketManager.Common.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Cards\" />
+  </ItemGroup>
+
 </Project>
