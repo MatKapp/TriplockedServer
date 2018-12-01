@@ -12,6 +12,7 @@
     <Folder Include="wwwroot\" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\TriplockedEngine\TriplockedEngine.csproj" />
     <ProjectReference Include="..\WebSocketManager\WebSocketManager.csproj" />
   </ItemGroup>
 </Project>
