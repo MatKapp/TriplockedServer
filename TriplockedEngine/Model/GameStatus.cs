@@ -2,12 +2,23 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Linq;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
 using Triplocked.TriplockedEngine.Model;
+using WebSocketManager.Common;
 
 namespace TriplockedEngine.Model
 {
     class GameStatus
     {
+        private JsonSerializerSettings _jsonSerializerSettings = new JsonSerializerSettings()
+        {
+            ContractResolver = new CamelCasePropertyNamesContractResolver(),
+            TypeNameHandling = TypeNameHandling.All,
+            TypeNameAssemblyFormatHandling = TypeNameAssemblyFormatHandling.Simple,
+            SerializationBinder = new JsonBinderWithoutAssembly()
+        };
+
         public int GameId { get; set; }
         public List<Player> CurrentPlayers { get; set; }
         public int MaxPlayers { get; set; }
@@ -62,26 +73,36 @@ namespace TriplockedEngine.Model
         public string AddAction(string playerId, List<ActionMessage> actions)
         {
             Player player = CurrentPlayers.FirstOrDefault(p => p.PlayerId.Equals(playerId));
+            string result;
 
             if (player != null)
             {
                 player.ActionList = actions;
                 PlayersResponseCounter++;
+                result = $"Player action added, {CurrentPlayers.Count}/{MaxPlayers}";
 
                 if (PlayersResponseCounter == MaxPlayers)
                 {
                     MakeMove();
+                    result = printGameState();
                 }
-                return "Player action added";
-            } else
-            {
-                return "Player action add failed, player not found";
             }
+            else
+            {
+                result = "Player action add failed, player not found";
+            }
+
+            return result;
         }
         private void MakeMove()
         {
             PlayersResponseCounter = 0;
 
+        }
+
+        private string printGameState()
+        {
+            return JsonConvert.SerializeObject(this, _jsonSerializerSettings);
         }
     }
 }

@@ -44,10 +44,7 @@ namespace Triplocked
         {
             var socketId = WebSocketConnectionManager.GetId(socket);
             var response = TriplockedEngine.Action(socketId, message);
-            await InvokeClientMethodAsync(socketId, "receiveMessage", new object[]{response});
-
-            //send number of people in game
-            await InvokeClientMethodToAllAsync("receiveMessage", WebSocketConnectionManager.GetId(socket), message);
+            await InvokeClientMethodToAllAsync("receiveMessage", WebSocketConnectionManager.GetId(socket), response);
         }
 
         public override async Task OnDisconnected(WebSocket socket)
