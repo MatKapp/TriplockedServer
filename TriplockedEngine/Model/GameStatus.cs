@@ -41,12 +41,13 @@ namespace TriplockedEngine.Model
             MaxY = maxY;
             Status = status;
             CardsList = new Dictionary<int, Card>()
-            {
-                {0, new Card(0,Direction.Up) },
-                {1, new Card(2,Direction.Up) },
-                {2, new Card(2,Direction.Down) },
-                {3, new Card(2,Direction.Left) },
-                {4, new Card(2,Direction.Right) },
+            {// id       mvm_len   mvm_dir      dmg        dmg_kernel  
+                {0, new Card(0,Direction.Up     ,0  ,new bool[1,1]{ {false} } )},
+                {1, new Card(2,Direction.Up     ,0  ,new bool[1,1]{ {false} } )},
+                {2, new Card(2,Direction.Down   ,0  ,new bool[1,1]{ {false} } )},
+                {3, new Card(2,Direction.Left   ,0  ,new bool[1,1]{ {false} } )},
+                {4, new Card(2,Direction.Right  ,0  ,new bool[1,1]{ {false} } )},
+                {5, new Card(0,Direction.Right  ,1  ,new bool[3,3]{ {true,true,true}, { true, false, true }, { true, true, true } } )},
             };
             PlayersResponseCounter = 0;
         }
@@ -124,6 +125,7 @@ namespace TriplockedEngine.Model
             for(int i = 0; i < 3; i++)
             {
                 ResolveMoves(i);
+                ResolveAttack(i);
                 //players special
                 //players attack
             }
@@ -221,6 +223,41 @@ namespace TriplockedEngine.Model
                 if(player.Animation == AnimationStatus.Move && ! playersMovements.ContainsKey(player.PlayerId))
                 {
                     player.Animation = AnimationStatus.Colide;
+                }
+            }
+        }
+        private void ResolveAttack(int cardNumber)
+        {
+            //Dictionary<string, Tuple<int, List<Tuple<int,int>>>> playersAttacks = new Dictionary<string, Tuple<int, List<Tuple<int,int>>>>(); //dmg, kernel
+            Dictionary<string, Tuple<int, int>> playersPositions = new Dictionary<string, Tuple<int, int>>();
+            foreach (var player in CurrentPlayers)
+            {
+                playersPositions[player.PlayerId] = new Tuple<int, int>(player.X, player.Y);
+                List<Tuple<int, int>> affectedPositions = new List<Tuple<int, int>>();
+                var card = CardsList[player.ActionList[cardNumber]];
+                if (card.Dmg != 0)
+                {
+                    int sizePerSide = card.DmgKernel.GetLength(0) / 2;
+                    for (int y = 0; y < card.DmgKernel.GetLength(0); y++)
+                    {
+                        for (int x = 0; x < card.DmgKernel.GetLength(0) ; x++)
+                        {
+                            if (card.DmgKernel[y, x])
+                            {
+                                affectedPositions.Add(new Tuple<int, int>(player.X + x - sizePerSide, player.Y + y - sizePerSide));
+                            }
+                        }
+                    }
+                    //playersAttacks[player.PlayerId] = new Tuple<int, bool[,]>(card.Dmg, card.DmgKernel);
+                    //player.Animation = AnimationStatus.Attack;
+                }
+                foreach (var position in playersPositions)
+                {
+                    if (affectedPositions.Contains(position.Value))
+                    {
+                        CurrentPlayers.First(d => d.PlayerId == position.Key).HP-=card.Dmg;
+                        //dodać taking dmg by player
+                    }
                 }
             }
         }

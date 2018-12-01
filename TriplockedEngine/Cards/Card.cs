@@ -9,10 +9,14 @@ namespace TriplockedEngine.Cards
     {
         public int Lenght { get; set; }
         public Direction Direction { get; set; }
-        public Card(int len, Direction dir)
+        public int Dmg { get; set; }
+        public bool[,] DmgKernel { get; set; }
+        public Card(int len, Direction dir, int dmg, bool[,] ker)
         {
             Lenght = len;
             Direction = dir;
+            Dmg = dmg;
+            DmgKernel = ker;
         }
     }
 }
