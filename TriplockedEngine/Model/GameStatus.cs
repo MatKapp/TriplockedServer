@@ -30,6 +30,7 @@ namespace TriplockedEngine.Model
         public int MaxY { get; set; }
         public int Status { get; set; }
         public int PlayersResponseCounter { get; set; }
+        public int[,] Grid; 
 
         public GameStatus(int id, int maxPlayers, int maxX, int maxY, int status)
         {
@@ -40,6 +41,7 @@ namespace TriplockedEngine.Model
             MaxX = maxX;
             MaxY = maxY;
             Status = status;
+            Grid = new int[MaxX, MaxY];
             CardsList = new Dictionary<int, Card>()
             {// id     name  mvm_len   mvm_dir      dmg        dmg_kernel  special   special_arg 
                 {-1, new Card("Move 0",0,Direction.Up     ,0  ,new bool[1,1]{ {false} } )},
@@ -67,7 +69,7 @@ namespace TriplockedEngine.Model
 
             if (CurrentPlayers.Count < MaxPlayers)
             {
-                Player newPlayer = new Player(id, CurrentPlayers.Count * 3, 1 + CurrentPlayers.Count);
+                Player newPlayer = new Player(CurrentPlayers.Count, id, CurrentPlayers.Count * 3, 1 + CurrentPlayers.Count);
                 CurrentPlayers.Add(newPlayer);
                 result = "Added";
             }
@@ -144,13 +146,15 @@ namespace TriplockedEngine.Model
             foreach (var player in CurrentPlayers)
             {
                 player.DrawCards();
-                player.ActionRecorded = false;
+                player.ActionRecorded = false;                
             }
 
             for (int i = 0; i < 3; i++)
             {
                 ResolveMoves(i);
+                GenerateGrid();
                 ResolveAttack(i);
+                
                 resultBuilder.Append(printGameState());
 
                 if (i != 2)
@@ -167,6 +171,23 @@ namespace TriplockedEngine.Model
             return resultBuilder.ToString();
         }
 
+        private void GenerateGrid()
+        {
+            for (int i = 0; i < MaxX; i++)
+            {
+                for (int j = 0; j < MaxY; j++)
+                {
+                    Grid[i, j] = -1;
+                }
+            }
+            foreach (var player in CurrentPlayers)
+            {
+                if (player.Animation != AnimationStatus.Death)
+                {
+                    Grid[player.X, player.Y] = player.PlayerNumber;
+                }
+            }
+        }
         private string printGameState()
         {
             return JsonConvert.SerializeObject(this, _jsonSerializerSettings);
@@ -289,7 +310,14 @@ namespace TriplockedEngine.Model
                 {
                     if (affectedPositions.Contains(position.Value))
                     {
-                        CurrentPlayers.First(d => d.PlayerId == position.Key).HP-=card.Dmg;
+                        Player currentPlayer = CurrentPlayers.First(d => d.PlayerId == position.Key);
+                        currentPlayer.HP -= card.Dmg;
+                        if (currentPlayer.HP <= 0)
+                        {
+                            currentPlayer.Animation = AnimationStatus.Death;
+                        }
+
+                        //dodać taking dmg by player
                     }
                 }
             }
