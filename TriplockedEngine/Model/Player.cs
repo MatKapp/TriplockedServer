@@ -35,15 +35,35 @@ namespace TriplockedEngine.Model
         public void DrawCards()
         {
             
-            CurrentHand = new List<int> { 0, 10};
+            CurrentHand = new List<int> {};
             int i = 3;
+            while (i > 0)
+            {
+                int cardId = Rand.Next(0, 4);
+                if (!CurrentHand.Contains(cardId))
+                {
+                    i--;
+                    CurrentHand.Add(cardId);
+                }
+            }
+            i = 3;
+            while (i > 0)
+            {
+                int cardId = Rand.Next(10, 14);
+                if (!CurrentHand.Contains(cardId))
+                {
+                    i--;
+                    CurrentHand.Add(cardId);
+                }
+            }
+            i = 3;
             while(i>0)
             {
                 int cardId = 10 * Rand.Next(2,9);
                 if (! CurrentHand.Contains(cardId))
                 {
                     i--;
-                    CurrentHand.Add(cardId);
+                    CurrentHand.Add(cardId+ Rand.Next(0, 4));
                 }
             }
         }

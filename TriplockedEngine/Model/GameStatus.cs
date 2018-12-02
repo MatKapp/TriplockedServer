@@ -51,10 +51,10 @@ namespace TriplockedEngine.Model
                 {-1, new Card("Move 0",0,Direction.Up     ,0  ,new bool[1,1]{ {false} } )},
                 {-2, new Card("Attack 1",0,Direction.Right  ,1  ,new bool[3,3]{ {true,true,true}, { true, false, true }, { true, true, true } } )},
 
-                {0,  new Card("Move 1",1,Direction.Up     ,0  ,new bool[1,1]{ {false} } )},
-                {1,  new Card("Move 1",1,Direction.Down   ,0  ,new bool[1,1]{ {false} } )},
-                {2,  new Card("Move 1",1,Direction.Left   ,0  ,new bool[1,1]{ {false} } )},
-                {3,  new Card("Move 1",1,Direction.Right  ,0  ,new bool[1,1]{ {false} } )},
+                {0,  new Card("Move 1 Up",1,Direction.Up     ,0  ,new bool[1,1]{ {false} } )},
+                {1,  new Card("Move 1 Down",1,Direction.Down   ,0  ,new bool[1,1]{ {false} } )},
+                {2,  new Card("Move 1 Left",1,Direction.Left   ,0  ,new bool[1,1]{ {false} } )},
+                {3,  new Card("Move 1 Right",1,Direction.Right  ,0  ,new bool[1,1]{ {false} } )},
 
                 {10, new Card("Attack 1",0,Direction.Right  ,1  ,new bool[3,3]{ { true, true, true}, { false, false, false }, { false, false, false } } )},
                 {11, new Card("Attack 1",0,Direction.Right  ,1  ,new bool[3,3]{ { false, false, false }, { false, false, false }, { true, true, true } } )},
@@ -66,10 +66,10 @@ namespace TriplockedEngine.Model
                 {22, new Card("Attack 2",0,Direction.Right  ,2  ,new bool[3,3]{ { false, false, false }, { true, false, false }, { false, false, false } } )},
                 {23, new Card("Attack 2",0,Direction.Right  ,2  ,new bool[3,3]{ { false, false, false }, { false, false, true}, { false, false, false } } )},
                 
-                {30, new Card("Move 1, Attack 1",1,Direction.Up  ,1  ,new bool[3,3]{ { true, true, true}, { false, false, false }, { false, false, false } } )},
-                {31, new Card("Move 1, Attack 1",1,Direction.Down  ,1  ,new bool[3,3]{ { false, false, false }, { false, false, false }, { true, true, true } } )},
-                {32, new Card("Move 1, Attack 1",1,Direction.Left  ,1  ,new bool[3,3]{ { true, false, false}, { true, false, false }, { true, false, false } } )},
-                {33, new Card("Move 1, Attack 1",1,Direction.Right  ,1  ,new bool[3,3]{ { false, false, true}, { false, false, true}, { false, false, true } } )},
+                {30, new Card("Move 1 Up, Attack 1",1,Direction.Up  ,1  ,new bool[3,3]{ { true, true, true}, { false, false, false }, { false, false, false } } )},
+                {31, new Card("Move 1 Down, Attack 1",1,Direction.Down  ,1  ,new bool[3,3]{ { false, false, false }, { false, false, false }, { true, true, true } } )},
+                {32, new Card("Move 1 Left, Attack 1",1,Direction.Left  ,1  ,new bool[3,3]{ { true, false, false}, { true, false, false }, { true, false, false } } )},
+                {33, new Card("Move 1 Right, Attack 1",1,Direction.Right  ,1  ,new bool[3,3]{ { false, false, true}, { false, false, true}, { false, false, true } } )},
                 
                 {40,  new Card("Heal 1",0,Direction.Up     ,0  ,new bool[1,1]{ {false} } ,1,1)},
                 {41,  new Card("Heal 1",0,Direction.Up     ,0  ,new bool[1,1]{ {false} } ,1,1)},
@@ -86,10 +86,10 @@ namespace TriplockedEngine.Model
                 {62, new Card("Attack 1",0,Direction.Right  ,1  ,new bool[3,3]{ { true, false, true}, { false, false, false}, { true, false, true } } )},
                 {63, new Card("Attack 1",0,Direction.Right  ,1  ,new bool[3,3]{ { true, false, true}, { false, false, false}, { true, false, true } } )},
                 
-                {70, new Card("Move 3",3,Direction.Up  ,0  ,new bool[1,1]{ { false} } )},
-                {71, new Card("Move 3",3,Direction.Down  ,0  ,new bool[1,1]{ { false} } )},
-                {72, new Card("Move 3",3,Direction.Left  ,0  ,new bool[1,1]{ { false} } )},
-                {73, new Card("Move 3",3,Direction.Right  ,0  ,new bool[1,1]{ { false} } )},
+                {70, new Card("Move 3 Up",3,Direction.Up  ,0  ,new bool[1,1]{ { false} } )},
+                {71, new Card("Move 3 Down",3,Direction.Down  ,0  ,new bool[1,1]{ { false} } )},
+                {72, new Card("Move 3 Left",3,Direction.Left  ,0  ,new bool[1,1]{ { false} } )},
+                {73, new Card("Move 3 Right",3,Direction.Right  ,0  ,new bool[1,1]{ { false} } )},
 
                 {80, new Card("Attack 1",0,Direction.Right  ,1  ,new bool[3,3]{ { false, true, false}, { true, false, true}, { false, true, false } } )},
                 {81, new Card("Attack 1",0,Direction.Right  ,1  ,new bool[3,3]{ { false, true, false}, { true, false, true}, { false, true, false } } )},
