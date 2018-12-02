@@ -234,6 +234,10 @@ namespace TriplockedEngine.Model
                 //if (i != 2)
                 resultBuilder.Append(',');
                 CurrentPlayers.RemoveAll(player => player.HP <= 0);
+                if(CurrentPlayers.Count <= 1)
+                {
+                    Status = 0;
+                }
                 
 
             }
