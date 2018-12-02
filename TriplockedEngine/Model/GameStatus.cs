@@ -107,7 +107,7 @@ namespace TriplockedEngine.Model
             {
                 Player newPlayer = new Player(CurrentPlayers.Count, id, CurrentPlayers.Count * 3, 1 + CurrentPlayers.Count,Rand);
                 CurrentPlayers.Add(newPlayer);
-                result = "User Added";
+                result = $"User Added number of players {CurrentPlayers.Count}";
             }
             else
             {
@@ -155,9 +155,9 @@ namespace TriplockedEngine.Model
                 {
                     player.ActionList = actions;
                     PlayersResponseCounter++;
-                    result = $"Player action added, {CurrentPlayers.Count}/{MaxPlayers}";
+                    result = $"Player action added, currentPlayers: {CurrentPlayers.Count} Players Response Counter {PlayersResponseCounter}";
 
-                    if (PlayersResponseCounter == CurrentPlayers.Count)
+                    if (PlayersResponseCounter >= CurrentPlayers.Count)
                     {
                         result = MakeMove();
                     }

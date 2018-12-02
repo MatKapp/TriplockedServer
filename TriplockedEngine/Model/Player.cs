@@ -21,6 +21,7 @@ namespace TriplockedEngine.Model
 
         public Player(int number, string id, int x, int y,Random rand)
         {
+            ActionList = new List<int>(){1,2,3};
             PlayerNumber = number;
             PlayerId = id;
             HP = 3;
@@ -29,6 +30,7 @@ namespace TriplockedEngine.Model
             Y = y;
             Rand = rand;
             DrawCards();
+            ActionRecorded = false;
         }
         public void DrawCards()
         {

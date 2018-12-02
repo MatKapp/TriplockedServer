@@ -18,19 +18,19 @@ namespace Triplocked
             TriplockedEngine = new global::TriplockedEngine.TriplockedEngine();
         }
 
-        public override async Task OnConnected(WebSocket socket)
-        {
-            await base.OnConnected(socket);
-            var socketId = WebSocketConnectionManager.GetId(socket);
+        //public override async Task OnConnected(WebSocket socket)
+        //{
+        //    await base.OnConnected(socket);
+        //    var socketId = WebSocketConnectionManager.GetId(socket);
 
-            var message = new Message()
-            {
-                MessageType = MessageType.Text,
-                Data = $"{socketId} you are connected Peter"
-            };
+        //    var message = new Message()
+        //    {
+        //        MessageType = MessageType.Text,
+        //        Data = $"{socketId} you are connected Peter"
+        //    };
 
-            await SendMessageAsync(socketId, message);
-        }
+        //    await SendMessageAsync(socketId, message);
+        //}
 
         // this method can be called from a client, add user.
         public async Task AddUser(WebSocket socket, string message)
@@ -47,16 +47,35 @@ namespace Triplocked
             await SendMessageAsync(socketId, responseMessage);
         }
 
+        // this method can be called from a client, add user.
+        public async Task ResetGameStatus(WebSocket socket, string message)
+        {
+            TriplockedEngine.ResetGameStatus();
+        }
+
         // this method can be called from a client, sequence of player actions.
         public async Task PlayerAction(WebSocket socket, string message)
         {
             var socketId = WebSocketConnectionManager.GetId(socket);
-            var response = TriplockedEngine.Action(socketId, message);
-            Message responseMessage = new Message()
+            Message responseMessage = null;
+
+            if (socketId != null)
             {
-                MessageType = MessageType.Text,
-                Data = response
-            };
+                var response = TriplockedEngine.Action(socketId, message);
+                responseMessage = new Message()
+                {
+                    MessageType = MessageType.Text,
+                    Data = response
+                };
+            }
+            else
+            {
+                responseMessage = new Message()
+                {
+                    MessageType = MessageType.Text,
+                    Data = "Player for Player Action not found"
+                };
+            }
 
             await SendMessageToAllAsync(responseMessage);
         }

@@ -13,5 +13,6 @@ namespace TriplockedEngine
         string Action(string webSocketId, string action);
         int GetRoomSize(int roomId = 0);
         int GetNumberOfPlayers(int roomId = 0);
+        void ResetGameStatus();
     }
 }

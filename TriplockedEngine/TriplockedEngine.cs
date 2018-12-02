@@ -46,6 +46,11 @@ namespace TriplockedEngine
             return gameStatus.CurrentPlayers.Count;
         }
 
+        public void ResetGameStatus()
+        {
+            gameStatus = new GameStatus(1, 2, 4, 4, 1);
+        }
+
         public TriplockedEngine()
         {
             gameStatus = new GameStatus(1, 2, 4, 4, 1);
