@@ -121,25 +121,25 @@ namespace TriplockedEngine.Model
                         p.X = 2;
                         p.Y = 3;
                         p = CurrentPlayers.First(d => d.PlayerNumber == 2);
-                        p.X = 4;
+                        p.X = 3;
                         p.Y = 0;
                         break;
                     case 4:
-                        MaxX = 5;
-                        MaxY = 5;
+                        MaxX = 4;
+                        MaxY = 4;
                         Grid = new int[MaxX, MaxY];
                         p = CurrentPlayers.First(d => d.PlayerNumber == 0);
                         p.X = 0;
                         p.Y = 0;
                         p = CurrentPlayers.First(d => d.PlayerNumber == 1);
                         p.X = 0;
-                        p.Y = 4;
+                        p.Y = 3;
                         p = CurrentPlayers.First(d => d.PlayerNumber == 2);
-                        p.X = 4;
+                        p.X = 3;
                         p.Y = 0;
                         p = CurrentPlayers.First(d => d.PlayerNumber == 3);
-                        p.X = 4;
-                        p.Y = 4;
+                        p.X = 3;
+                        p.Y = 3;
                         break;
                 }
                 result = "User Added";
@@ -165,12 +165,14 @@ namespace TriplockedEngine.Model
 
             return result;
         }
+
         public string AddMonitor(string id)
         {
             Monitor newMonitor = new Monitor(id);
             CurrentMonitors.Add(newMonitor);
             return "Monitor added";
         }
+
         public string RemoveMonitor(string id)
         {
             if (CurrentMonitors.RemoveAll(m => m.MonitorId.Equals(id)) == 1)
@@ -179,6 +181,7 @@ namespace TriplockedEngine.Model
             }            
             return "Monitor to remove not found";
         }
+
         public string AddAction(string playerId, List<int> actions)
         {
             Player player = CurrentPlayers.FirstOrDefault(p => p.PlayerId.Equals(playerId));
@@ -210,6 +213,7 @@ namespace TriplockedEngine.Model
 
             return result;
         }
+
         private string MakeMove()
         {
             StringBuilder resultBuilder = new StringBuilder();
@@ -238,9 +242,8 @@ namespace TriplockedEngine.Model
                 {
                     Status = 0;
                 }
-                
-
             }
+
             foreach (var player in CurrentPlayers)
             {
                 player.Animation = AnimationStatus.Idle;
