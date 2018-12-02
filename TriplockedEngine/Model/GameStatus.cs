@@ -248,6 +248,18 @@ namespace TriplockedEngine.Model
             {
                 player.Animation = AnimationStatus.Idle;
             }
+
+            for (int i = 0; i < MaxX; i++)
+            {
+                for (int j = 0; j < MaxY; j++)
+                {
+                    if(Grid[i, j] == -2)
+                    {
+                        Grid[i, j] = -1;
+                    }
+                }
+            }
+
             resultBuilder.Append(printGameState());
 
             resultBuilder.Append("]}");
