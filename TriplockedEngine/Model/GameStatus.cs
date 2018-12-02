@@ -363,7 +363,7 @@ namespace TriplockedEngine.Model
                 {
                     foreach (var otherPosition in playersPositions)
                     {
-                        if (position.Key != otherPosition.Key && position.Value == otherPosition.Value)
+                        if (position.Key != otherPosition.Key && position.Value.Item1 == otherPosition.Value.Item1 && position.Value.Item2 == otherPosition.Value.Item2)
                         {
                             finished = false;
                             if (playersMovements.ContainsKey(position.Key))
