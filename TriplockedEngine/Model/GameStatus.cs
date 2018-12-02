@@ -233,6 +233,7 @@ namespace TriplockedEngine.Model
 
                 //if (i != 2)
                 resultBuilder.Append(',');
+                CurrentPlayers.RemoveAll(player => player.HP <= 0);
                 
 
             }
@@ -408,7 +409,7 @@ namespace TriplockedEngine.Model
                         if (currentPlayer.HP <= 0)
                         {
                             currentPlayer.Animation = AnimationStatus.Death;
-                            Status = 0; //game ended (specjalna wiadomość?)
+                            //Status = 0; //game ended (specjalna wiadomość?)
 
                         }
                         switch (currentPlayer.Animation)
