@@ -44,7 +44,7 @@ namespace TriplockedEngine.Model
             MaxY = maxY;
             Status = status;
             MaxHP = 3;
-            Rand = = new Random();
+            Rand = new Random();
             Grid = new int[MaxX, MaxY];
             CardsList = new Dictionary<int, Card>()
             {// id     name  mvm_len   mvm_dir      dmg        dmg_kernel  special   special_arg 
