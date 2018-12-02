@@ -29,6 +29,7 @@ namespace TriplockedEngine.Model
             X = x;
             Y = y;
             Rand = rand;
+            ActionRecorded = false;
             DrawCards();
             ActionRecorded = false;
         }

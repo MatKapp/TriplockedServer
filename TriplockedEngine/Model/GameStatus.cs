@@ -105,9 +105,44 @@ namespace TriplockedEngine.Model
 
             if (CurrentPlayers.Count < MaxPlayers && !CurrentPlayers.Exists(player => player.PlayerId.Equals(id)))
             {
-                Player newPlayer = new Player(CurrentPlayers.Count, id, CurrentPlayers.Count * 3, 1 + CurrentPlayers.Count,Rand);
+                Player newPlayer = new Player(CurrentPlayers.Count, id, (CurrentPlayers.Count % 2) * 4, 4 - (CurrentPlayers.Count % 2)*4,Rand);
                 CurrentPlayers.Add(newPlayer);
-                result = $"User Added number of players {CurrentPlayers.Count}";
+                Player p;
+                switch (CurrentPlayers.Count)
+                {
+                    case 3:
+                        MaxX = 4;
+                        MaxY = 4;
+                        Grid = new int[MaxX, MaxY];
+                        p = CurrentPlayers.First(d => d.PlayerNumber == 0);
+                        p.X = 0;
+                        p.Y = 0;
+                        p = CurrentPlayers.First(d => d.PlayerNumber == 1);
+                        p.X = 2;
+                        p.Y = 3;
+                        p = CurrentPlayers.First(d => d.PlayerNumber == 2);
+                        p.X = 4;
+                        p.Y = 0;
+                        break;
+                    case 4:
+                        MaxX = 5;
+                        MaxY = 5;
+                        Grid = new int[MaxX, MaxY];
+                        p = CurrentPlayers.First(d => d.PlayerNumber == 0);
+                        p.X = 0;
+                        p.Y = 0;
+                        p = CurrentPlayers.First(d => d.PlayerNumber == 1);
+                        p.X = 0;
+                        p.Y = 4;
+                        p = CurrentPlayers.First(d => d.PlayerNumber == 2);
+                        p.X = 4;
+                        p.Y = 0;
+                        p = CurrentPlayers.First(d => d.PlayerNumber == 3);
+                        p.X = 4;
+                        p.Y = 4;
+                        break;
+                }
+                result = "User Added";
             }
             else
             {
@@ -155,7 +190,8 @@ namespace TriplockedEngine.Model
                 {
                     player.ActionList = actions;
                     PlayersResponseCounter++;
-                    result = $"Player action added, currentPlayers: {CurrentPlayers.Count} Players Response Counter {PlayersResponseCounter}";
+                    player.ActionRecorded = true;
+                    result = $"Player action added, {CurrentPlayers.Count}/{MaxPlayers}";
 
                     if (PlayersResponseCounter >= CurrentPlayers.Count)
                     {
@@ -195,13 +231,21 @@ namespace TriplockedEngine.Model
                 
                 resultBuilder.Append(printGameState());
 
-                if (i != 2)
+                //if (i != 2)
+                resultBuilder.Append(',');
+                CurrentPlayers.RemoveAll(player => player.HP <= 0);
+                if(CurrentPlayers.Count <= 1)
                 {
-                    resultBuilder.Append(',');
+                    Status = 0;
                 }
-                //players special
-                //players attack
+                
+
             }
+            foreach (var player in CurrentPlayers)
+            {
+                player.Animation = AnimationStatus.Idle;
+            }
+            resultBuilder.Append(printGameState());
 
             resultBuilder.Append("]}");
             PlayersResponseCounter = 0;
@@ -369,6 +413,8 @@ namespace TriplockedEngine.Model
                         if (currentPlayer.HP <= 0)
                         {
                             currentPlayer.Animation = AnimationStatus.Death;
+                            //Status = 0; //game ended (specjalna wiadomość?)
+
                         }
                         switch (currentPlayer.Animation)
                         {
