@@ -7,6 +7,7 @@ namespace TriplockedEngine.Model
 {
     class Player
     {
+        public int PlayerNumber { get; set; }
         public string PlayerId { get; set; }
         public int HP { get; set; }
         public int Attack { get; set; }
@@ -16,19 +17,33 @@ namespace TriplockedEngine.Model
         public List<int> ActionList { get; set; }
         public List<int> CurrentHand { get; set; }
         public bool ActionRecorded { get; set; }
+        private Random Rand;
 
-        public Player(string id, int x, int y)
+        public Player(int number, string id, int x, int y,Random rand)
         {
+            PlayerNumber = number;
             PlayerId = id;
             HP = 3;
             Attack = 1;
             X = x;
             Y = y;
+            Rand = rand;
             DrawCards();
         }
         public void DrawCards()
         {
-            CurrentHand = new List<int> { 1, 2, 3, 4, 5 };
+            
+            CurrentHand = new List<int> { 0, 10};
+            int i = 3;
+            while(i>0)
+            {
+                int cardId = 10 * Rand.Next(2,9);
+                if (! CurrentHand.Contains(cardId))
+                {
+                    i--;
+                    CurrentHand.Add(cardId);
+                }
+            }
         }
     }
 }
