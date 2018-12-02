@@ -427,12 +427,7 @@ namespace TriplockedEngine.Model
                     {
                         Player currentPlayer = CurrentPlayers.First(d => d.PlayerId == position.Key);
                         currentPlayer.HP -= card.Dmg;
-                        if (currentPlayer.HP <= 0)
-                        {
-                            currentPlayer.Animation = AnimationStatus.Death;
-                            //Status = 0; //game ended (specjalna wiadomość?)
 
-                        }
                         switch (currentPlayer.Animation)
                         {
                             case AnimationStatus.Idle:
@@ -447,6 +442,24 @@ namespace TriplockedEngine.Model
                             case AnimationStatus.Colide:
                                 currentPlayer.Animation = AnimationStatus.ColideHurt;
                                 break;
+                        }
+                        if (currentPlayer.HP <= 0)
+                        {
+                            int pN = currentPlayer.PlayerNumber;
+                            //currentPlayer.Animation = AnimationStatus.Death;
+                            for (int i = 0; i < MaxX; i++)
+                            {
+                                for (int j = 0; j < MaxY; j++)
+                                {
+                                    if (Grid[i, j] == pN)
+                                    {
+                                        Grid[i, j] = -2;
+                                    }
+                                }
+                            }
+                            CurrentPlayers.Remove(currentPlayer);
+                            //Status = 0; //game ended (specjalna wiadomość?)
+
                         }
                     }
                 }
