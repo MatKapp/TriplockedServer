@@ -22,15 +22,29 @@ namespace Triplocked
         {
             await base.OnConnected(socket);
             var socketId = WebSocketConnectionManager.GetId(socket);
-            TriplockedEngine.AddPlayer(socketId);
 
             var message = new Message()
             {
                 MessageType = MessageType.Text,
-                Data = $"{socketId} połączyłeś się Piotrze"
+                Data = $"{socketId} you are connected Peter"
             };
 
             await SendMessageAsync(socketId, message);
+        }
+
+        // this method can be called from a client, add user.
+        public async Task AddUser(WebSocket socket, string message)
+        {
+            var socketId = WebSocketConnectionManager.GetId(socket);
+            var result = TriplockedEngine.AddPlayer(socketId);
+
+            Message responseMessage = new Message()
+            {
+                MessageType = MessageType.Text,
+                Data = result
+            };
+
+            await SendMessageAsync(socketId, responseMessage);
         }
 
         // this method can be called from a client, sequence of player actions.
@@ -53,13 +67,6 @@ namespace Triplocked
             TriplockedEngine.RemovePlayer(socketId);
 
             await base.OnDisconnected(socket);
-
-            var message = new Message()
-            {
-                MessageType = MessageType.Text,
-                Data = $"{socketId} disconnected"
-            };
-            await SendMessageToAllAsync(message);
         }
     }
 }

@@ -19,7 +19,6 @@ namespace WebSocketManager
         private JsonSerializerSettings _jsonSerializerSettings = new JsonSerializerSettings()
         {
             ContractResolver = new CamelCasePropertyNamesContractResolver(),
-            TypeNameHandling = TypeNameHandling.All,
             TypeNameAssemblyFormatHandling = TypeNameAssemblyFormatHandling.Simple,
             SerializationBinder = new JsonBinderWithoutAssembly()
         };

@@ -48,7 +48,7 @@ namespace TriplockedEngine
 
         public TriplockedEngine()
         {
-            gameStatus = new GameStatus(1, 1, 4, 4, 1);
+            gameStatus = new GameStatus(1, 2, 4, 4, 1);
         }
     }
 }

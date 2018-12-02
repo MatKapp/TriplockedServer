@@ -7,6 +7,7 @@ using Newtonsoft.Json.Serialization;
 using Triplocked.TriplockedEngine.Model;
 using WebSocketManager.Common;
 using TriplockedEngine.Cards;
+using System.Linq;
 
 namespace TriplockedEngine.Model
 {
@@ -15,7 +16,6 @@ namespace TriplockedEngine.Model
         private JsonSerializerSettings _jsonSerializerSettings = new JsonSerializerSettings()
         {
             ContractResolver = new CamelCasePropertyNamesContractResolver(),
-            TypeNameHandling = TypeNameHandling.All,
             TypeNameAssemblyFormatHandling = TypeNameAssemblyFormatHandling.Simple,
             SerializationBinder = new JsonBinderWithoutAssembly()
         };
@@ -59,11 +59,11 @@ namespace TriplockedEngine.Model
         {
             string result;
 
-            if (CurrentPlayers.Count < MaxPlayers)
+            if (CurrentPlayers.Count < MaxPlayers && !CurrentPlayers.Exists(player => player.PlayerId.Equals(id)))
             {
                 Player newPlayer = new Player(id, CurrentPlayers.Count * 3, 1 + CurrentPlayers.Count);
                 CurrentPlayers.Add(newPlayer);
-                result = "Added";
+                result = "User Added";
             }
             else
             {
@@ -75,7 +75,7 @@ namespace TriplockedEngine.Model
         {
             string result;
 
-            if (CurrentPlayers.RemoveAll(p => p.PlayerId.Equals(id)) == 1)
+            if (!String.IsNullOrEmpty(id) && CurrentPlayers.RemoveAll(p => p.PlayerId.Equals(id)) == 1)
             {
                 result = "Player removed";
             }
@@ -113,7 +113,7 @@ namespace TriplockedEngine.Model
                     PlayersResponseCounter++;
                     result = $"Player action added, {CurrentPlayers.Count}/{MaxPlayers}";
 
-                    if (PlayersResponseCounter == MaxPlayers)
+                    if (PlayersResponseCounter == CurrentPlayers.Count)
                     {
                         result = MakeMove();
                     }
@@ -195,6 +195,7 @@ namespace TriplockedEngine.Model
         {
             Dictionary<string, Tuple<int, int>> playersPositions = new Dictionary<string, Tuple<int, int>>();
             Dictionary<string, Tuple<int, int>> playersMovements = new Dictionary<string, Tuple<int, int>>();
+
             foreach (var player in CurrentPlayers)
             {
                 var card = CardsList[player.ActionList[cardNumber]];
@@ -205,26 +206,34 @@ namespace TriplockedEngine.Model
                 }
             }
             bool finished = false;
+
             while (!finished)
             {
                 finished = true;
+
                 foreach (var player in CurrentPlayers)
                 {
                     playersPositions[player.PlayerId] = new Tuple<int, int>(player.X, player.Y);
                 }
+
                 foreach (var movement in playersMovements)
                 {
                     var playerId = movement.Key;
                     var movX = playersPositions[playerId].Item1 + playersMovements[playerId].Item1;
+
                     if (movX >= MaxX) movX = MaxX - 1;
+
                     if (movX < 0) movX = 0;
 
                     var movY = playersPositions[playerId].Item2 + playersMovements[playerId].Item2;
+
                     if (movY >= MaxY) movY = MaxY - 1;
+
                     if (movY < 0) movY = 0;
 
                     playersPositions[playerId] = new Tuple<int, int>(movX,movY);
                 }
+            
                 //var duplicateValues = playersPositions.GroupBy(x => x.Value).Where(x => x.Count() > 1);
                 //if(duplicateValues.Count() != 0)
                 foreach (var position in playersPositions)
@@ -242,8 +251,8 @@ namespace TriplockedEngine.Model
                     }
                 }
             }
-            //zobaczyc czy to dziala
-            foreach (var player in CurrentPlayers)
+          
+            foreach (var player in CurrentPlayers)      //TODO check if does it work
             {
                 player.X = playersPositions[player.PlayerId].Item1;
                 player.Y = playersPositions[player.PlayerId].Item2;

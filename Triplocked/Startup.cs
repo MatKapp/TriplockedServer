@@ -21,8 +21,6 @@ namespace Triplocked
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IServiceProvider serviceProvider)
         {
-            WebSocketOptions webSocketOptions = new WebSocketOptions();
-            webSocketOptions.KeepAliveInterval = new TimeSpan(2, 0, 0);
             app.UseWebSockets();
             app.MapWebSocketManager("/game", serviceProvider.GetService<TriplockedCommunication>());
 
