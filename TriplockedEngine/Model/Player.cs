@@ -17,8 +17,9 @@ namespace TriplockedEngine.Model
         public List<int> ActionList { get; set; }
         public List<int> CurrentHand { get; set; }
         public bool ActionRecorded { get; set; }
+        private Random Rand;
 
-        public Player(int number, string id, int x, int y)
+        public Player(int number, string id, int x, int y,Random rand)
         {
             PlayerNumber = number;
             PlayerId = id;
@@ -26,11 +27,23 @@ namespace TriplockedEngine.Model
             Attack = 1;
             X = x;
             Y = y;
+            Rand = rand;
             DrawCards();
         }
         public void DrawCards()
         {
-            CurrentHand = new List<int> { 0, 10, 20, 30, 40 };
+            
+            CurrentHand = new List<int> { 0, 10};
+            int i = 3;
+            while(i>0)
+            {
+                int cardId = 10 * Rand.Next(2,9);
+                if (! CurrentHand.Contains(cardId))
+                {
+                    i--;
+                    CurrentHand.Add(cardId);
+                }
+            }
         }
     }
 }

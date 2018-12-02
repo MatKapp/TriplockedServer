@@ -31,7 +31,8 @@ namespace TriplockedEngine.Model
         public int Status { get; set; }
         public int MaxHP { get; set; }
         public int PlayersResponseCounter { get; set; }
-        public int[,] Grid; 
+        public int[,] Grid;
+        public Random Rand;
 
         public GameStatus(int id, int maxPlayers, int maxX, int maxY, int status)
         {
@@ -43,6 +44,7 @@ namespace TriplockedEngine.Model
             MaxY = maxY;
             Status = status;
             MaxHP = 3;
+            Rand = = new Random();
             Grid = new int[MaxX, MaxY];
             CardsList = new Dictionary<int, Card>()
             {// id     name  mvm_len   mvm_dir      dmg        dmg_kernel  special   special_arg 
@@ -68,11 +70,31 @@ namespace TriplockedEngine.Model
                 {31, new Card("Move 1, Attack 1",1,Direction.Down  ,1  ,new bool[3,3]{ { false, false, false }, { false, false, false }, { true, true, true } } )},
                 {32, new Card("Move 1, Attack 1",1,Direction.Left  ,1  ,new bool[3,3]{ { true, false, false}, { true, false, false }, { true, false, false } } )},
                 {33, new Card("Move 1, Attack 1",1,Direction.Right  ,1  ,new bool[3,3]{ { false, false, true}, { false, false, true}, { false, false, true } } )},
-
+                
                 {40,  new Card("Heal 1",0,Direction.Up     ,0  ,new bool[1,1]{ {false} } ,1,1)},
                 {41,  new Card("Heal 1",0,Direction.Up     ,0  ,new bool[1,1]{ {false} } ,1,1)},
                 {42,  new Card("Heal 1",0,Direction.Up     ,0  ,new bool[1,1]{ {false} } ,1,1)},
                 {43,  new Card("Heal 1",0,Direction.Up     ,0  ,new bool[1,1]{ {false} } ,1,1)},
+
+                {50,  new Card("Attack 1",0,Direction.Up     ,1  ,new bool[5,5]{ { false, false, true, false, false }, { false, false, true, false, false }, { false, false, false, false, false }, { false, false, true, false, false }, { false, false, true, false, false } } ,0,0)},
+                {51,  new Card("Attack 1",0,Direction.Up     ,1  ,new bool[5,5]{ { false, false, true, false, false }, { false, false, true, false, false }, { false, false, false, false, false }, { false, false, true, false, false }, { false, false, true, false, false } } ,0,0)},
+                {52,  new Card("Attack 1",0,Direction.Up     ,1  ,new bool[5,5]{ { false, false, false, false, false }, { false, false, false, false, false }, { true, true, false, true, true }, { false, false, false, false, false }, { false, false, false, false, false } } ,0,0)},
+                {53,  new Card("Attack 1",0,Direction.Up     ,1  ,new bool[5,5]{ { false, false, false, false, false }, { false, false, false, false, false }, { true, true, false, true, true }, { false, false, false, false, false }, { false, false, false, false, false } } ,0,0)},
+
+                {60, new Card("Attack 1",0,Direction.Right  ,1  ,new bool[3,3]{ { true, false, true}, { false, false, false}, { true, false, true } } )},
+                {61, new Card("Attack 1",0,Direction.Right  ,1  ,new bool[3,3]{ { true, false, true}, { false, false, false}, { true, false, true } } )},
+                {62, new Card("Attack 1",0,Direction.Right  ,1  ,new bool[3,3]{ { true, false, true}, { false, false, false}, { true, false, true } } )},
+                {63, new Card("Attack 1",0,Direction.Right  ,1  ,new bool[3,3]{ { true, false, true}, { false, false, false}, { true, false, true } } )},
+                
+                {70, new Card("Move 3",3,Direction.Up  ,0  ,new bool[1,1]{ { false} } )},
+                {71, new Card("Move 3",3,Direction.Down  ,0  ,new bool[1,1]{ { false} } )},
+                {72, new Card("Move 3",3,Direction.Left  ,0  ,new bool[1,1]{ { false} } )},
+                {73, new Card("Move 3",3,Direction.Right  ,0  ,new bool[1,1]{ { false} } )},
+
+                {80, new Card("Attack 1",0,Direction.Right  ,1  ,new bool[3,3]{ { false, true, false}, { true, false, true}, { false, true, false } } )},
+                {81, new Card("Attack 1",0,Direction.Right  ,1  ,new bool[3,3]{ { false, true, false}, { true, false, true}, { false, true, false } } )},
+                {82, new Card("Attack 1",0,Direction.Right  ,1  ,new bool[3,3]{ { false, true, false}, { true, false, true}, { false, true, false } } )},
+                {83, new Card("Attack 1",0,Direction.Right  ,1  ,new bool[3,3]{ { false, true, false}, { true, false, true}, { false, true, false } } )},
 
             };
             PlayersResponseCounter = 0;
@@ -83,7 +105,7 @@ namespace TriplockedEngine.Model
 
             if (CurrentPlayers.Count < MaxPlayers)
             {
-                Player newPlayer = new Player(CurrentPlayers.Count, id, CurrentPlayers.Count * 3, 1 + CurrentPlayers.Count);
+                Player newPlayer = new Player(CurrentPlayers.Count, id, CurrentPlayers.Count * 3, 1 + CurrentPlayers.Count,Rand);
                 CurrentPlayers.Add(newPlayer);
                 result = "Added";
             }
