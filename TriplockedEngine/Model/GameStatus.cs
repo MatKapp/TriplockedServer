@@ -236,7 +236,6 @@ namespace TriplockedEngine.Model
 
                 //if (i != 2)
                 resultBuilder.Append(',');
-                CurrentPlayers.RemoveAll(player => player.HP <= 0);
                 if(CurrentPlayers.Count <= 1)
                 {
                     Status = 0;
@@ -392,6 +391,10 @@ namespace TriplockedEngine.Model
             foreach (var player in CurrentPlayers)
             {
                 playersPositions[player.PlayerId] = new Tuple<int, int>(player.X, player.Y);
+
+            }
+            foreach (var player in CurrentPlayers)
+            {   
                 List<Tuple<int, int>> affectedPositions = new List<Tuple<int, int>>();
                 var card = CardsList[player.ActionList[cardNumber]];
                 if (card.Dmg != 0)
