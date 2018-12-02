@@ -111,7 +111,7 @@ namespace TriplockedEngine.Model
                 switch (CurrentPlayers.Count)
                 {
                     case 3:
-                        MaxX = 4;
+                        MaxX = 5;
                         MaxY = 4;
                         Grid = new int[MaxX, MaxY];
                         p = CurrentPlayers.First(d => d.PlayerNumber == 0);
@@ -121,25 +121,25 @@ namespace TriplockedEngine.Model
                         p.X = 2;
                         p.Y = 3;
                         p = CurrentPlayers.First(d => d.PlayerNumber == 2);
-                        p.X = 3;
+                        p.X = 4;
                         p.Y = 0;
                         break;
                     case 4:
-                        MaxX = 4;
-                        MaxY = 4;
+                        MaxX = 5;
+                        MaxY = 5;
                         Grid = new int[MaxX, MaxY];
                         p = CurrentPlayers.First(d => d.PlayerNumber == 0);
                         p.X = 0;
                         p.Y = 0;
                         p = CurrentPlayers.First(d => d.PlayerNumber == 1);
                         p.X = 0;
-                        p.Y = 3;
+                        p.Y = 4;
                         p = CurrentPlayers.First(d => d.PlayerNumber == 2);
-                        p.X = 3;
+                        p.X = 4;
                         p.Y = 0;
                         p = CurrentPlayers.First(d => d.PlayerNumber == 3);
-                        p.X = 3;
-                        p.Y = 3;
+                        p.X = 4;
+                        p.Y = 4;
                         break;
                 }
                 result = "User Added";
@@ -362,7 +362,7 @@ namespace TriplockedEngine.Model
                 {
                     foreach (var otherPosition in playersPositions)
                     {
-                        if (position.Key != otherPosition.Key && position.Value == otherPosition.Value)
+                        if (position.Key != otherPosition.Key && position.Value.Item1 == otherPosition.Value.Item1 && position.Value.Item2 == otherPosition.Value.Item2)
                         {
                             finished = false;
                             if (playersMovements.ContainsKey(position.Key))
