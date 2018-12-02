@@ -105,7 +105,7 @@ namespace TriplockedEngine.Model
 
             if (CurrentPlayers.Count < MaxPlayers && !CurrentPlayers.Exists(player => player.PlayerId.Equals(id)))
             {
-                Player newPlayer = new Player(CurrentPlayers.Count, id, (CurrentPlayers.Count % 2) * 4, 4 - (CurrentPlayers.Count % 2)*4,Rand);
+                Player newPlayer = new Player(CurrentPlayers.Count, id, CurrentPlayers.Count * 3, 1 + CurrentPlayers.Count,Rand);
                 CurrentPlayers.Add(newPlayer);
                 Player p;
                 switch (CurrentPlayers.Count)
@@ -193,7 +193,6 @@ namespace TriplockedEngine.Model
                 {
                     player.ActionList = actions;
                     PlayersResponseCounter++;
-                    player.ActionRecorded = true;
                     result = $"Player action added, {CurrentPlayers.Count}/{MaxPlayers}";
 
                     if (PlayersResponseCounter >= CurrentPlayers.Count)
