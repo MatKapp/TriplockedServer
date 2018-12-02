@@ -48,12 +48,12 @@ namespace TriplockedEngine
 
         public void ResetGameStatus()
         {
-            gameStatus = new GameStatus(1, 2, 4, 4, 1);
+            gameStatus = new GameStatus(1, 4, 4, 4, 1);
         }
 
         public TriplockedEngine()
         {
-            gameStatus = new GameStatus(1, 2, 4, 4, 1);
+            gameStatus = new GameStatus(1, 4, 4, 4, 1);
         }
     }
 }
