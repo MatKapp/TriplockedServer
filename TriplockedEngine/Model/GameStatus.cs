@@ -403,7 +403,7 @@ namespace TriplockedEngine.Model
                 {
                     foreach (var pos in affectedPositions)
                     {
-                        if(Grid[pos.Item1,pos.Item2] == -1)
+                        if(pos.Item1 >=0 && pos.Item1 < MaxX  && pos.Item2 >= 0 && pos.Item2 < MaxY && Grid[pos.Item1,pos.Item2] == -1)
                         {
                             Grid[pos.Item1, pos.Item2] = -2;
                         }
